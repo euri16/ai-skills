@@ -1,0 +1,4 @@
+interface:
+  display_name: "Promote Rule To Script"
+  short_description: "Turns exact, repeated rules into scripts or hooks"
+  default_prompt: "Use $promote-rule-to-script to find the rules in this project that should be scripts."

@@ -1,0 +1,38 @@
+/*
+  Crumb Theory brand fonts. Read by design-reel-cover (covers and the comparison sheet) and
+  edit-short-video (copied into each HyperFrames project); any HTML artifact can link it.
+
+  Both families are on Google Fonts under the SIL Open Font License 1.1:
+    Fraunces   display: headlines, giant numbers, the wordmark
+    Work Sans  text: subtitles, pills, labels, body copy
+
+  This file loads them from Google Fonts, so a render needs network access. To render offline,
+  download the variable WOFF2 files into this folder (the license allows redistributing them),
+  delete the @import line and uncomment the local @font-face rules at the end. Keep the
+  family names: the CSS variables and the brand tokens in visual-identity.md use them.
+*/
+
+@import url("https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap");
+
+:root {
+  --font-display: "Fraunces", Georgia, "Times New Roman", serif;
+  --font-text: "Work Sans", system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
+  --font-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+}
+
+/* Local files for offline rendering (file names are the ones you choose when downloading):
+@font-face {
+  font-family: "Fraunces";
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: block;
+  src: url("fraunces-variable.woff2") format("woff2-variations"), url("fraunces-variable.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Work Sans";
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: block;
+  src: url("work-sans-variable.woff2") format("woff2-variations"), url("work-sans-variable.woff2") format("woff2");
+}
+*/

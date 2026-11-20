@@ -1,0 +1,4 @@
+interface:
+  display_name: "Review Stale Docs"
+  short_description: "Checks documents and skills against the code"
+  default_prompt: "Use $review-stale-docs to check this project's documents and skills against the code."

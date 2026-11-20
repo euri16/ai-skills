@@ -1,0 +1,4 @@
+interface:
+  display_name: "Recommend Video Hook"
+  short_description: "Choose the hook of a short video and how to execute it"
+  default_prompt: "Use $recommend-video-hook to recommend the hook (first line, first frame and on-screen text) for this short video idea."

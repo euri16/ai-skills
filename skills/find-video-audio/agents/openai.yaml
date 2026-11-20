@@ -1,0 +1,4 @@
+interface:
+  display_name: "Find Video Audio"
+  short_description: "Free, registered music and sound effects for a short video"
+  default_prompt: "Use $find-video-audio to choose and fetch the music and sound effects for this short video, with licenses registered."

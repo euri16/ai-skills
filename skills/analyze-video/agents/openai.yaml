@@ -1,0 +1,4 @@
+interface:
+  display_name: "Analyze Video"
+  short_description: "Transcribe and summarize videos locally"
+  default_prompt: "Use $analyze-video to transcribe and understand this video before working with it."

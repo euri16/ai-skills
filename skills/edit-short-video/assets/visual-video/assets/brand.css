@@ -1,0 +1,18 @@
+/* Brand tokens of the project ("Brand tokens" in references/visual-system.md).
+   The values below are example values: they belong to Crumb Theory, the fictional brand of the ai-skills repo.
+   Replace every one with the values of the workspace's brand-guide/visual-identity.md. */
+:root{
+  --bg:#2A211B;          /* dark background (Rye) */
+  --bg-rgb:42,33,27;
+  --ink:#2A211B;         /* deep ink: window bars, depth layers (Rye) */
+  --on-accent:#F7F1E6;   /* text on the accent (Flour) */
+  --mid:#7A8F5C;         /* mid tone (Sage) */
+  --accent:#C23B5A;      /* accent (Berry) */
+  --accent-rgb:194,59,90;
+  --light:#F7F1E6;       /* light neutral (Flour) */
+  --text:#F7F1E6;        /* subtitles and headlines on dark (Flour) */
+  --font-display:"Fraunces";
+  --font-text:"Work Sans";
+  --code-bg:#6B4A33;     /* window background (Crust) */
+  --font-mono:ui-monospace,"SF Mono",Menlo,monospace;
+}

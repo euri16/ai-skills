@@ -1,0 +1,120 @@
+<!doctype html><html><head><meta charset="utf-8">
+<!--
+  Worked example of a Reel cover (1080x1920): shows the level of finish and the reusable techniques.
+  It is not a mold: each cover needs its own concept.
+
+  EXAMPLE BRAND. The colors and font names in :root below belong to Crumb Theory, the fictional example brand of
+  the ai-skills repo (examples/crumb-theory/brand-guide/visual-identity.md). Replace them with the values of the
+  workspace's brand-guide/visual-identity.md. The style of this example (sentence-case headline, rotated pill, strokes
+  and flat shadows, a person as the subject) is one possible finish, not a rule: the workspace's visual-identity.md
+  decides the headline case, the pills, the finish and what the subject of a cover is. Fonts, logo and icons are not bundled with this skill: they are
+  loaded from the workspace's brand-guide/assets/. The relative paths below assume this file lives in
+  social/<YYYY-MM-DD-slug>/cover-src/ (three levels below the workspace root); adjust them otherwise, and replace
+  the <logo-light> and <icon> placeholders with the real file names.
+
+  To render it, it needs in the same folder:
+    background.png  frame of the setting (it gets blurred)
+    cut.png         cutout of the subject made with scripts/cutout.py
+  The SLOT comments mark the parts that depend on the concept. Render with scripts/render.sh; with the query guides=1
+  it draws the profile's 3:4 crop (accent color) and, in dashed red, the Reels interface zones during playback: top
+  bar, bottom block and button column. The figures are those of scripts/preview.sh, their only source.
+-->
+<link rel="stylesheet" href="../../../brand-guide/assets/fonts/fonts.css">
+<style>
+/* EXAMPLE BRAND: replace with the workspace's brand-guide/visual-identity.md */
+:root{
+  --bg-dark:#2A211B;        /* dark background (Rye) */
+  --bg-dark-rgb:42,33,27;   /* the dark background as r,g,b for tints and gradients */
+  --light:#F7F1E6;          /* light background, text on dark and the light outline (Flour) */
+  --accent:#C23B5A;         /* accent color for the keyword, pills and halo (Berry) */
+  --accent-rgb:194,59,90;   /* the accent as r,g,b for translucent halos */
+  --on-accent:#F7F1E6;      /* text on the accent (Flour) */
+  --shadow:#6B4A33;         /* flat headline shadow (Crust) */
+  --ink-secondary:#7A8F5C;  /* secondary ink for drawn props (Sage) */
+  --highlight:#F2D27A;      /* small highlights, such as a tinted sticker (Butter) */
+  --font-headline:"Fraunces";  /* headline typeface, weight 700 */
+  --font-label:"Work Sans";    /* kicker and label typeface, weight 700 */
+  --logo-url:url("../../../brand-guide/assets/logo/<logo-light>.svg");
+  --sticker-url:url("../../../brand-guide/assets/icons/<icon>.svg");
+}
+*{box-sizing:border-box}
+html,body{margin:0;width:1080px;height:1920px;overflow:hidden;background:var(--bg-dark)}
+/* Background: frame of the place, blurred and tinted with the dark background color so the headline can breathe */
+.bg{position:absolute;inset:-40px;background:url(background.png) center 30%/cover;filter:blur(7px) saturate(1.1)}
+.tint{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 35%,rgba(var(--bg-dark-rgb),0) 0%,rgba(var(--bg-dark-rgb),.55) 75%),linear-gradient(to bottom,rgba(var(--bg-dark-rgb),.2) 0%,rgba(var(--bg-dark-rgb),.1) 35%,rgba(var(--bg-dark-rgb),.85) 60%,var(--bg-dark) 72%)}
+.halo{position:absolute;left:470px;top:760px;width:1300px;height:1300px;transform:translate(-50%,-50%);background:radial-gradient(circle,rgba(var(--accent-rgb),.75) 0%,rgba(var(--accent-rgb),.28) 33%,rgba(var(--accent-rgb),0) 60%)}
+/* Subject (here, a person): bleeds off the left so the cutout's straight edge is not visible; light + accent outline */
+.person{position:absolute;left:-90px;top:165px;width:1030px;height:1831px;background:url(cut.png) center/100% 100%;
+  -webkit-mask-image:linear-gradient(to bottom,#000 60%,transparent 80%);
+  filter:drop-shadow(7px 0 0 var(--light)) drop-shadow(-7px 0 0 var(--light)) drop-shadow(0 7px 0 var(--light)) drop-shadow(0 -7px 0 var(--light)) drop-shadow(6px 0 0 var(--accent)) drop-shadow(-6px 0 0 var(--accent)) drop-shadow(0 -6px 0 var(--accent)) drop-shadow(0 6px 0 var(--accent))}
+/* Prop: light card that goes IN FRONT of the person so nothing covers its text */
+.card{position:absolute;left:615px;top:290px;width:410px;padding:26px 28px 24px;background:var(--light);border:7px solid var(--bg-dark);border-radius:30px;transform:rotate(7deg);box-shadow:12px 14px 0 var(--bg-dark);font-family:var(--font-label);color:var(--bg-dark)}
+.card h4{margin:0 0 14px;font-weight:700;font-size:36px;letter-spacing:1px;white-space:nowrap} /* 36 px: legible minimum on the 1080 canvas */
+.row{display:flex;align-items:center;justify-content:space-between;font-weight:700;font-size:36px;padding:9px 0;border-top:3px solid rgba(var(--bg-dark-rgb),.15)}
+.row svg{width:38px;height:38px}
+.row svg path{stroke:var(--ink-secondary)}
+.row.q{background:var(--accent);color:var(--on-accent);margin:6px -14px 0;padding:9px 14px;border-radius:14px;border-top:none;font-weight:900}
+.row.q span:last-child{font-family:var(--font-headline);font-size:42px}
+/* Shadow under the headline: covers clothing or background that competes with the letters */
+.shade{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(var(--bg-dark-rgb),0) 57%,rgba(var(--bg-dark-rgb),.8) 68%,rgba(var(--bg-dark-rgb),.92) 80%,var(--bg-dark) 90%)}
+.motion{position:absolute;left:585px;top:815px;width:230px;height:230px}
+.motion .under{stroke:var(--bg-dark)}.motion .over{stroke:var(--accent)}
+/* Official glyph from brand-guide/assets/icons/ tinted with a mask: only palette colors. */
+.sticker{position:absolute;left:885px;top:1130px;width:96px;height:96px;background:var(--highlight);
+  -webkit-mask:var(--sticker-url) center/contain no-repeat;mask:var(--sticker-url) center/contain no-repeat}
+.logo{position:absolute;left:60px;top:290px;width:118px;height:118px;background:var(--logo-url) center/contain no-repeat}
+/* Text block: inside the 3:4 crop (y 240-1680) */
+.block{position:absolute;left:0;right:0;top:1180px;text-align:center}
+.kicker{display:inline-block;background:var(--accent);color:var(--on-accent);font-family:var(--font-label);font-weight:700;font-size:40px;letter-spacing:3px;padding:12px 30px 14px;border-radius:999px;border:5px solid var(--bg-dark);transform:rotate(-4deg);margin-bottom:14px}
+.h1{font-family:var(--font-headline);font-weight:700;line-height:.9;-webkit-text-stroke:14px var(--bg-dark);paint-order:stroke fill}
+.h1 .a{font-size:158px;display:block;color:var(--light);text-shadow:0 12px 0 var(--shadow)}
+.h1 .b{font-size:184px;display:block;letter-spacing:-3px;color:var(--light);text-shadow:0 12px 0 var(--shadow)}
+.o{color:var(--accent)}
+/* Guides (only with ?guides=1) */
+.g{display:none;position:absolute;pointer-events:none}
+.guides .g{display:block}
+.g.crop{left:0;right:0;height:240px;background:rgba(0,0,0,.55);border-color:var(--accent);border-style:solid;border-width:0}
+.g.crop.t{top:0;border-bottom-width:4px}.g.crop.b{bottom:0;border-top-width:4px}
+/* Reels interface during playback, same figures as scripts/preview.sh: top bar down to y 210, bottom block from y 1400,
+   button column from x 945 between y 1095 and 1850. They bind the video's first frame, not the cover in the grid. */
+.g.ui{border:0 dashed red}
+.g.ui.top{left:0;right:0;top:0;height:210px;border-bottom-width:3px}
+.g.ui.bottom{left:0;right:0;top:1400px;bottom:0;border-top-width:3px}
+.g.ui.col{left:945px;right:0;top:1095px;height:755px;border-width:3px}
+#warn{display:none;position:absolute;top:0;left:0;right:0;background:red;color:#fff;font:40px Arial;padding:20px;z-index:9}
+</style></head><body>
+<div class="bg"></div><div class="tint"></div><div class="halo"></div>
+<div class="person"></div>
+<!-- SLOT prop: graphic object that names the joke or the topic without revealing the punchline -->
+<div class="card"><h4>PROOFING LOG</h4>
+ <div class="row"><span>Hour 1</span><svg viewBox="0 0 40 40"><path d="M8 21l8 8 16-17" fill="none" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+ <div class="row"><span>Hour 2</span><svg viewBox="0 0 40 40"><path d="M8 21l8 8 16-17" fill="none" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+ <div class="row"><span>Hour 3</span><svg viewBox="0 0 40 40"><path d="M8 21l8 8 16-17" fill="none" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+ <div class="row q"><span>Hour 4</span><span>??</span></div>
+</div>
+<div class="shade"></div>
+<!-- SLOT props: the scene's own drawing (here, motion lines). Props are drawn; stickers are not. -->
+<svg class="motion" viewBox="0 0 220 220" fill="none" stroke-linecap="round">
+  <g class="under" stroke-width="32"><path d="M40 150 A60 60 0 0 0 80 60"/><path d="M90 178 A112 112 0 0 0 132 28"/></g>
+  <g class="over" stroke-width="17"><path d="M40 150 A60 60 0 0 0 80 60"/><path d="M90 178 A112 112 0 0 0 132 28"/></g>
+</svg>
+<!-- SLOT stickers: one or two from brand-guide/assets/icons/, never hand-drawn -->
+<div class="sticker"></div>
+<div class="logo"></div>
+<div class="block">
+  <!-- SLOT kicker: 1-3 words of context; it counts toward the headline's total -->
+  <div class="kicker">STARTER: DAY 3</div>
+  <!-- SLOT headline: 4-6 words counting the kicker, one keyword in .o (accent) -->
+  <div class="h1"><span class="a">Still no</span><span class="b"><span class="o">rise</span>?</span></div>
+</div>
+<div class="g crop t"></div><div class="g crop b"></div><div class="g ui top"></div><div class="g ui bottom"></div><div class="g ui col"></div>
+<div id="warn">FONT NOT LOADED</div>
+<script>
+if (new URLSearchParams(location.search).has('guides')) document.body.classList.add('guides');
+const css = getComputedStyle(document.documentElement);
+const headline = css.getPropertyValue('--font-headline').trim(), label = css.getPropertyValue('--font-label').trim();
+// A family that fonts.css never declared also counts as not loaded (document.fonts.check returns true for it).
+const declared = name => [...document.fonts].some(f => f.family.replace(/["']/g,'') === name.replace(/["']/g,''));
+document.fonts.ready.then(()=>{ if(!declared(headline)||!declared(label)||!document.fonts.check('700 100px ' + headline)||!document.fonts.check('700 40px ' + label)) document.getElementById('warn').style.display='block'; });
+</script>
+</body></html>

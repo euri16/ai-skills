@@ -1,0 +1,4 @@
+interface:
+  display_name: "Generate AI Images"
+  short_description: "Edits real photos and generates effects and images with AI"
+  default_prompt: "Use $generate-ai-images to create or edit the image this piece needs."

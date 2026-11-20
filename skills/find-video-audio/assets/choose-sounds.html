@@ -1,0 +1,52 @@
+<!doctype html><html lang="{{LANG}}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>{{HEADING}} · {{TITLE}}</title>
+<style>
+/* Neutral tool palette; to give the page the brand's look, replace these variables with the colors of brand-guide/visual-identity.md. */
+:root{--bg:#15171C;--card:#232730;--line:#3B4250;--fg:#F3F1EC;--ac:#4F8CFF;--on-ac:#0E1116}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.4 -apple-system,system-ui,sans-serif;padding:16px 16px 120px}
+h1{margin:0 0 4px} p{margin:0 0 16px;opacity:.85}
+section{margin:0 0 22px;border-top:1px solid var(--line);padding-top:12px}
+h2{font-size:18px;margin:0 0 4px} h2 b{color:var(--ac);margin-right:8px}
+.use{display:grid;grid-template-columns:auto 1fr;gap:2px 10px;margin:0 0 8px;font-size:15px}
+.use dt{font-weight:700;color:var(--ac)}
+.use dd{margin:0}
+.reason{margin:0 0 8px;font-size:15px;opacity:.9}
+.row{display:flex;gap:12px;flex-wrap:wrap}
+.card{flex:0 1 300px;background:var(--card);border-radius:10px;padding:10px;cursor:pointer;border:3px solid transparent}
+.card:has(input:checked){border-color:var(--ac)}
+.card.fav{box-shadow:0 0 0 2px var(--ac) inset}
+.card span{display:block;font-weight:600;margin-bottom:6px}
+.card em{display:inline-block;margin:0 0 6px;background:var(--ac);color:var(--on-ac);font-style:normal;font-weight:700;font-size:13px;padding:2px 8px;border-radius:999px}
+.card small{display:block;opacity:.7;margin-top:6px}
+.signature{font-size:13px;opacity:.75}
+audio{width:100%}
+#out{position:fixed;left:0;right:0;bottom:0;background:var(--card);padding:10px 16px;display:flex;gap:10px;align-items:center;box-shadow:0 -6px 20px rgba(0,0,0,.4)}
+#saved{font-weight:700;color:var(--ac);white-space:nowrap}
+#out textarea{flex:1;min-width:0;height:48px;background:var(--bg);color:var(--fg);border:1px solid var(--line);border-radius:6px;font:13px monospace}
+button{background:var(--ac);color:var(--on-ac);border:0;border-radius:8px;padding:12px 16px;font-weight:700;cursor:pointer}
+</style></head><body>
+<h1>{{HEADING}} · {{TITLE}}</h1>
+<p>{{INTRO}}</p>
+{{SECTIONS}}
+<div id="out"><span id="saved"></span><textarea id="res" readonly></textarea><button id="cp">{{COPY}}</button></div>
+<script>
+// Interface texts come from the LABELS block of scripts/choose-sounds.py (or the piece's labels.json).
+const L = {{LABELS_JSON}};
+const res = document.getElementById("res"), notice = document.getElementById("saved");
+function upd() { res.value = [...document.querySelectorAll("section")].map(s => { const c = s.querySelector("input:checked"); return s.dataset.clip + ": " + (c ? c.value : "-"); }).join(" | "); }
+document.addEventListener("change", upd); upd();
+document.getElementById("cp").onclick = () => { res.select(); navigator.clipboard ? navigator.clipboard.writeText(res.value) : document.execCommand("copy"); };
+document.addEventListener("play", e => document.querySelectorAll("audio").forEach(a => { if (a !== e.target) a.pause(); }), true);
+if (location.protocol.startsWith("http")) {
+  fetch("/state").then(r => r.json()).then(e => {
+    for (const [clip, v] of Object.entries(e)) { const i = [...document.querySelectorAll("section")].find(s => s.dataset.clip === clip)?.querySelector(`input[value="${CSS.escape(v)}"]`); if (i) i.checked = true; }
+    upd(); notice.textContent = L.autosave;
+  }).catch(() => {});
+  document.addEventListener("change", e => {
+    if (e.target.type !== "radio") return;
+    const clip = e.target.closest("section").dataset.clip;
+    fetch("/choose", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ clip, choice: e.target.value }) })
+      .then(r => { notice.textContent = r.ok ? `${L.saved} ${clip}: ${e.target.value}` : L.not_saved; })
+      .catch(() => { notice.textContent = L.not_saved_copy; });
+  });
+}
+</script></body></html>

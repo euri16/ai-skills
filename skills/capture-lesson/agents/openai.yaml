@@ -1,0 +1,4 @@
+interface:
+  display_name: "Capture Lesson"
+  short_description: "Stores a correction in the right document, with approval"
+  default_prompt: "Use $capture-lesson to store the correction I just made in the right document."

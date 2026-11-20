@@ -1,0 +1,4 @@
+interface:
+  display_name: "Design Reel Cover"
+  short_description: "Designs Reel covers with the workspace's brand"
+  default_prompt: "Use $design-reel-cover to design an Instagram Reel cover for this video."

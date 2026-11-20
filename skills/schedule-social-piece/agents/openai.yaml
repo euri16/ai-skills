@@ -1,0 +1,4 @@
+interface:
+  display_name: "Schedule Social Piece"
+  short_description: "Schedules an approved piece in Buffer"
+  default_prompt: "Use $schedule-social-piece to schedule this approved piece."

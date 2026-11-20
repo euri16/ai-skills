@@ -1,0 +1,4 @@
+interface:
+  display_name: "Create Agents Map"
+  short_description: "Interviews you and writes the project's AGENTS.md map"
+  default_prompt: "Use $create-agents-map to interview me and write this project's AGENTS.md."

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Write Caption"
+  short_description: "Writes a piece's caption and its version per network"
+  default_prompt: "Use $write-caption to write the caption for this piece and its versions for TikTok, Shorts and LinkedIn."

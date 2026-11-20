@@ -1,0 +1,4 @@
+interface:
+  display_name: "Edit Short Video"
+  short_description: "Edits a creator's short vertical video, with or without a camera take, and renders it locally"
+  default_prompt: "Use $edit-short-video to propose and then produce the edit of this short vertical video, from the creator's recording and b-roll or as a visual video from its script."

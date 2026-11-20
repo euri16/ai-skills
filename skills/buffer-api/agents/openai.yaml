@@ -1,0 +1,4 @@
+interface:
+  display_name: "Buffer API"
+  short_description: "Operates a Buffer account through its GraphQL API"
+  default_prompt: "Use $buffer-api to show what is in my Buffer queue."

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Research Content Topic"
+  short_description: "Turns research into editorial angles"
+  default_prompt: "Use $research-content-topic to research this idea and propose evidence-based content angles."

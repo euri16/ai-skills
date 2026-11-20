@@ -1,0 +1,200 @@
+<!doctype html><html lang="en" data-resolution="portrait"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=1080, height=1920">
+<!--
+  Base template of a visual video: a short vertical piece with no camera take, built from full-frame scenes.
+  How to use it, what each attribute means and the snippets for the voice-over, subtitles, sounds and music:
+  references/visual-video.md of the edit-short-video skill. The scenes below are an invented example for the fictional
+  brand Crumb Theory; replace their text, visuals and timing, and replace assets/brand.css with the brand's tokens.
+  assets/fonts/fonts.css is not part of the template: copy it from the workspace's brand-guide/assets/fonts/.
+-->
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+<link rel="stylesheet" href="assets/fonts/fonts.css">
+<link rel="stylesheet" href="assets/brand.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:1080px;height:1920px;overflow:hidden;background:var(--bg)}
+body{font-family:var(--font-text),Helvetica,Arial,sans-serif;color:var(--text)}
+
+/* Track 0: the backdrop, alive from frame 0 and for the whole piece */
+#backdrop{position:absolute;inset:0;background:var(--bg);overflow:hidden}
+.glow{position:absolute;width:1100px;height:1100px;border-radius:50%}
+#glow-a{left:600px;top:-600px;background:radial-gradient(closest-side,var(--accent),transparent);opacity:.2}
+#glow-b{left:-600px;top:1400px;background:radial-gradient(closest-side,var(--mid),transparent);opacity:.22}
+
+/* Track 3: one scene at a time. The stage is the area a scene may fill: the safe zone, left of the button column */
+.scene{position:absolute;inset:0}
+.stage{position:absolute;left:108px;right:150px;top:210px;bottom:240px;display:flex;flex-direction:column;justify-content:center;align-items:flex-start;gap:44px}
+.voiced .stage{bottom:680px}                 /* with voice-over the scene ends at y 1240 and leaves the subtitle zone free */
+.kicker{font:700 40px/1 var(--font-text);letter-spacing:2px;color:var(--light)}
+.pill{font:700 40px/1 var(--font-text);background:var(--accent);color:var(--on-accent);padding:14px 30px;border-radius:44px}
+.headline{font:700 112px/1.02 var(--font-display);color:var(--text)}
+.payoff{font:700 104px/1.04 var(--font-display);color:var(--text)}
+.support{font:600 58px/1.18 var(--font-text);color:var(--text)}
+.note{font:600 40px/1.2 var(--font-text);color:var(--text);opacity:.8}
+.headline em,.payoff em,.support em{font-style:normal;color:var(--accent)}
+.w{display:inline-block}
+
+/* Lead visuals: one per scene, each acts once at data-act seconds after its scene starts */
+.strike{position:relative;font:700 72px/1 var(--font-text);color:var(--bg);background:var(--light);padding:22px 40px;border-radius:26px}
+.strike i{position:absolute;left:18px;right:18px;top:50%;height:10px;margin-top:-5px;border-radius:5px;background:var(--accent);display:block}
+.figure{font:700 400px/0.9 var(--font-display);letter-spacing:-12px;color:var(--accent);font-variant-numeric:tabular-nums;white-space:nowrap}
+.figure small{font:700 120px/1 var(--font-display);letter-spacing:0;color:var(--text);margin-left:18px}
+.win{width:822px;background:var(--code-bg,var(--ink));border:3px solid rgba(255,255,255,.14);border-radius:22px;box-shadow:0 30px 60px rgba(0,0,0,.35);overflow:hidden}
+.bar{height:58px;background:var(--ink);display:flex;align-items:center;gap:10px;padding:0 20px}
+.bar i{width:16px;height:16px;border-radius:50%;background:var(--light);opacity:.5;display:block}
+.bar span{margin-left:14px;font:600 36px/1 var(--font-text);color:var(--light);opacity:.75}
+.rows{padding:22px 0}
+.row{position:relative;display:flex;justify-content:space-between;padding:14px 30px;font:500 40px/1.4 var(--font-mono,monospace);color:var(--light)}
+.row.dim{opacity:.5}
+.row .mark{position:absolute;inset:0;background:rgba(var(--accent-rgb),.3);box-shadow:inset 8px 0 0 var(--accent)}
+.row b{position:relative;font-weight:500}
+.steps{display:flex;flex-direction:column;gap:26px;align-self:stretch}
+.step{display:flex;align-items:center;gap:26px;background:var(--light);color:var(--bg);font:700 60px/1.1 var(--font-text);padding:26px 34px;border-radius:26px}
+.tick{flex:none;width:64px;height:64px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center}
+.tick svg{display:block}
+
+/* Track 4: subtitles, only with voice-over ("Subtitles" in references/hyperframes-recipes.md) */
+.cap{position:absolute;left:50%;transform:translateX(-50%);bottom:530px;max-width:880px;background:rgba(var(--bg-rgb),.80);color:var(--text);border-radius:24px;padding:18px 38px;font:700 64px/1.1 var(--font-text);text-align:center;white-space:nowrap;opacity:0}
+.k{color:var(--accent)}
+</style></head><body>
+<div id="root" data-composition-id="main" data-start="0" data-duration="20.5" data-width="1080" data-height="1920" data-fps="30">
+
+  <div id="backdrop" class="clip" data-start="0" data-duration="20.5" data-track-index="0">
+    <div id="glow-a" class="glow" data-layout-allow-overflow></div><div id="glow-b" class="glow" data-layout-allow-overflow></div>
+  </div>
+
+  <!-- Scene 1, the hook: complete on screen within 2 s, its first block and first word already there on frame 0 -->
+  <div id="s1" class="scene clip" data-start="0" data-duration="3" data-track-index="3" data-visual-seconds="0.6">
+    <div class="stage">
+      <div class="kicker">Kitchen test</div>
+      <h1 class="headline read words">A cup of flour is <em>not</em> a weight</h1>
+      <div id="s1-lead" class="strike" data-act="1.3" data-kind="strike">1 cup<i></i></div>
+    </div>
+  </div>
+
+  <!-- Scene 2, a number climbing to its final value -->
+  <div id="s2" class="scene clip" data-start="3" data-duration="4.5" data-track-index="3" data-visual-seconds="1">
+    <div class="stage">
+      <div id="s2-lead" class="figure" data-act="0.6" data-kind="count" data-from="120" data-to="158"><span class="num">158</span><small>g</small></div>
+      <p class="support read">The same cup, scooped <em>straight from the bag</em>.</p>
+    </div>
+  </div>
+
+  <!-- Scene 3, the source: the real document in the brand window, its key line marked, and where it comes from -->
+  <div id="s3" class="scene clip" data-start="7.5" data-duration="5" data-track-index="3" data-visual-seconds="0.6">
+    <div class="stage">
+      <div class="win">
+        <div class="bar"><i></i><i></i><i></i><span>test-log.txt</span></div>
+        <div class="rows">
+          <div class="row dim"><b>Spooned and leveled</b><b>124 g</b></div>
+          <div id="s3-lead" class="row read" data-act="1.1" data-kind="mark"><span class="mark"></span><b>Scooped from the bag</b><b>158 g</b></div>
+        </div>
+      </div>
+      <p class="note read">One scale, one morning, five cups each.</p>
+    </div>
+  </div>
+
+  <!-- Scene 4, steps at the same level as each other: it arrives from the side -->
+  <div id="s4" class="scene clip" data-start="12.5" data-duration="3" data-track-index="3" data-visual-seconds="0.6" data-transition="side">
+    <div class="stage">
+      <div class="pill">Do this</div>
+      <div id="s4-lead" class="steps read" data-act="1" data-kind="check">
+        <div class="step"><span class="tick"><svg width="36" height="36" viewBox="0 0 36 36"><path d="M7 19 L15 27 L29 10" stroke="var(--on-accent)" stroke-width="5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Tare the bowl</div>
+        <div class="step"><span class="tick"><svg width="36" height="36" viewBox="0 0 36 36"><path d="M7 19 L15 27 L29 10" stroke="var(--on-accent)" stroke-width="5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Pour to 125 g</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scene 5, the close: the payoff and the call to action, then the hard cut -->
+  <div id="s5" class="scene clip" data-start="15.5" data-duration="5" data-track-index="3" data-visual-seconds="0">
+    <div class="stage">
+      <h2 class="payoff read words">Weigh it. <em>Same bread</em> every time.</h2>
+      <p class="support read">Save this for your next bake.</p>
+    </div>
+  </div>
+
+</div>
+<script>
+var ENTER = 0.45, EXIT = 0.2;                       // scene entry and exit, in seconds
+var tl = gsap.timeline({paused:true});
+var root = document.getElementById('root'), total = +root.dataset.duration;
+var scenes = [].slice.call(document.querySelectorAll('.scene'));
+
+/* Split every .words block into one span per word. data-times="t t t" (composition seconds, one per word) syncs the
+   words to a voice-over; without it they reveal in a chain. */
+document.querySelectorAll('.words').forEach(function(el){
+  var times = (el.dataset.times || '').split(/\s+/).filter(Boolean), n = 0;
+  (function walk(node){
+    [].slice.call(node.childNodes).forEach(function(c){
+      if (c.nodeType === 1) { walk(c); return; }
+      if (c.nodeType !== 3) return;
+      var frag = document.createDocumentFragment();
+      c.textContent.split(/(\s+)/).forEach(function(part){
+        if (!part) return;
+        if (/^\s+$/.test(part)) { frag.appendChild(document.createTextNode(' ')); return; }
+        var w = document.createElement('span'); w.className = 'w'; w.textContent = part;
+        if (times.length) w.dataset.t = times[n];
+        n++; frag.appendChild(w);
+      });
+      node.replaceChild(frag, c);
+    });
+  })(el);
+});
+
+function show(el, at){ tl.fromTo(el, {opacity:0, y:24}, {opacity:1, y:0, duration:0.35, ease:'power3.out'}, at); }
+
+/* The single action of a lead visual, by data-kind */
+function act(el, at){
+  var kind = el.dataset.kind;
+  if (kind === 'strike') tl.fromTo(el.querySelector('i'), {scaleX:0, transformOrigin:'0% 50%'}, {scaleX:1, duration:0.25, ease:'power3.out'}, at);
+  if (kind === 'mark') tl.fromTo(el.querySelector('.mark'), {scaleX:0, transformOrigin:'0% 50%'}, {scaleX:1, duration:0.3, ease:'power3.out'}, at);
+  if (kind === 'check') [].slice.call(el.querySelectorAll('.tick')).forEach(function(t, i){
+    tl.fromTo(t, {scale:0}, {scale:1, duration:0.3, ease:'back.out(1.6)'}, at + i * 0.3); });
+  if (kind === 'count') {
+    var num = el.querySelector('.num'), state = {v: +el.dataset.from}, to = +el.dataset.to;
+    num.textContent = Math.round(state.v);
+    tl.to(state, {v: to, duration:0.8, ease:'power2.out', onUpdate:function(){ num.textContent = Math.round(state.v); }}, at);
+  }
+}
+
+scenes.forEach(function(sc, k){
+  var s = +sc.dataset.start, d = +sc.dataset.duration, stage = sc.querySelector('.stage');
+  var hook = k === 0, next = scenes[k + 1], t = s;
+  if (!hook) {                                       // entry: from behind (default) or from the side
+    if (sc.dataset.transition === 'side') tl.fromTo(stage, {opacity:0, x:160}, {opacity:1, x:0, duration:ENTER, ease:'power3.out'}, s);
+    else tl.fromTo(stage, {opacity:0, scale:0.92}, {opacity:1, scale:1, duration:ENTER, ease:'power3.out'}, s);
+  }
+  var wordStep = hook ? 0.06 : 0.09, blockStep = hook ? 0.2 : 0.25;
+  [].slice.call(stage.children).forEach(function(block, b){
+    if (block.dataset.at) t = +block.dataset.at;     // a block that waits for a word of the voice-over
+    var words = block.classList.contains('words') ? [].slice.call(block.querySelectorAll('.w')) : [];
+    if (words.length) {
+      words.forEach(function(w, i){
+        var at = w.dataset.t !== undefined ? +w.dataset.t : t + i * wordStep;
+        if (hook && at <= 0) return;                 // already on screen on frame 0
+        tl.fromTo(w, {opacity:0, y:18}, {opacity:1, y:0, duration:0.3, ease:'power3.out'}, at);
+      });
+      t += words.length * wordStep + blockStep;
+    } else {
+      if (hook && b === 0) return;                   // the first block of the hook is on screen on frame 0
+      show(block, t); t += blockStep;
+    }
+  });
+  [].slice.call(sc.querySelectorAll('[data-act]')).forEach(function(v){ act(v, s + +v.dataset.act); });
+  if (next) {                                        // exit toward the camera, or aside when the next scene comes from the side
+    if (next.dataset.transition === 'side') tl.to(stage, {opacity:0, x:-160, duration:EXIT, ease:'power2.in'}, s + d - EXIT);
+    else tl.to(stage, {opacity:0, scale:1.06, duration:EXIT, ease:'power2.in'}, s + d - EXIT);
+  }
+});
+
+/* Subtitles (voice-over only) */
+document.querySelectorAll('.cap').forEach(function(el){ var s = +el.dataset.start, d = +el.dataset.duration;
+  tl.fromTo(el, {opacity:0, y:8}, {opacity:1, y:0, duration:0.12, ease:'power2.out'}, s);
+  tl.to(el, {opacity:0, duration:0.1, ease:'power2.in'}, s + d - 0.1); });
+
+/* Backdrop: a single slow straight drift from the first frame to the last */
+tl.fromTo('#glow-a', {x:0, y:0}, {x:70, y:-50, duration:total, ease:'none'}, 0);
+tl.fromTo('#glow-b', {x:0, y:0}, {x:-60, y:50, duration:total, ease:'none'}, 0);
+
+window.__timelines = window.__timelines || {}; window.__timelines["main"] = tl;
+</script></body></html>

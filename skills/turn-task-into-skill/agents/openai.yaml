@@ -1,0 +1,4 @@
+interface:
+  display_name: "Turn Task Into Skill"
+  short_description: "Packages a repeated task as a skill or an orchestrator"
+  default_prompt: "Use $turn-task-into-skill to package the task we just did as a skill."

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Write Short Video Script"
+  short_description: "Writes short-video scripts that hook without being frantic"
+  default_prompt: "Use $write-short-video-script to write a short-video script for this idea, choosing the hook with $recommend-video-hook."
